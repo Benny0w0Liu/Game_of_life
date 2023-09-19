@@ -5,12 +5,28 @@
     </head>
     <body>
         <h1>Conway's Game of Life</h1>
-        <a href="./Hex_life_game.html" style="display:flex ;">
-            <button>Hexagon Game of Life ⇒</button>
-        </a> 
-        <canvas id="canvas_Conway"></canvas>
-        <input type="button" value = "play" id="play">
+        <div style="display: flex;">
+            <div>
+                <h2>Play Game</h2>
+                <p>Please input your first pattern before click play button.</p>
+                <canvas id="canvas_Conway"></canvas>
+            </div>
+            
+            <div>
+                <h2>Set the first pattern</h2>
+                <br>
+                <p id="original_table" style="line-height: 10px;white-space:nowrap"></p>
+            </div>
+            <div>
+                <input type="button" value = "Play" id="play" style="margin: 10px;"><br>
+                <input type="button" value = "Clear all checkboxs" id="clearbox"style="margin: 10px;"><br>
+                <label style="margin: 10px;"for="speed">Speed</label><input type="range" id="speed" min="5" max="20" value="10"><br>
+            </div>
+            
+        </div>
+        
         <script src="Game_of_Life.js"></script>
+        
         <style>
             a{text-decoration:none}
             a:hover{text-decoration:none}

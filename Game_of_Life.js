@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas_Conway");  
 const context = canvas.getContext("2d");
 
-var length = 10, size = 600, block_number=52;
+var length = 10, size = 520, block_number=52;
 canvas.width = size;
 canvas.height = size;
 	
@@ -10,18 +10,18 @@ function draw_square(x,y,f){
     context.beginPath();
 	if(f==1){
 		context.fillStyle = "#000000";
-        context.fillRect( size/2 + x*10, size/2 - y*10, length, length);
+        context.fillRect( x*10, y*10, length, length);
 	}else{
-        context.strokeRect( size/2 + x*10, size/2 - y*10, length, length);
+        context.strokeRect( x*10, y*10, length, length);
 	    context.strokeStyle = "#7a7a7a";
     }
     context.closePath();
 }
 // set bacground
 function set_background(){
-    for(var i=0;i<block_number;i++){
-	    for(var j=0;j<block_number;j++){
-		    draw_square(i-block_number/2,j-block_number/2,0);
+    for(var i=1;i<block_number-1;i++){
+	    for(var j=1;j<block_number-1;j++){
+		    draw_square(i,j,0);
 	    }	
     }	
 }
@@ -40,13 +40,27 @@ for (var i = 0; i < block_number; i++) {
     }
 }
 //set pattern 在這裡設定初始圖案!!!
+function set_table(){
+    var string="";
+    for(var i=1;i<block_number-1;i++){
+        for(var j=1;j<block_number-1;j++){
+            string=string+'<input type="checkbox" style="width:10px ; height:10px; margin:0px" id="'+i+','+j+'">';
+        }
+        string=string+"<br>";
+    }
+    document.getElementById("original_table").innerHTML=string;
+}
+set_table();
+
 function set_pattern(){
-    arr[1][48]=1;
-    arr[2][48]=1;
-    arr[3][48]=1;
-    arr[3][49]=1;
-    arr[2][50]=1;
-    
+    var string="";
+    for(var i=1;i<block_number-1;i++){
+        for(var j=1;j<block_number-1;j++){
+            if(document.getElementById(i+','+j).checked == true){
+                arr[j][i]=1;
+            }
+        }
+    }
 }
 // run the game with those rules
 /*
@@ -88,7 +102,7 @@ function display_result(){
     for(var i=0;i<block_number;i++){
         for(var j=0;j<block_number;j++){
             if(next[i][j]==1){
-                draw_square(i-block_number/2,j-block_number/2,1);
+                draw_square(i,j,1);
             }
         }
     }
@@ -102,6 +116,7 @@ function reset_pattern(){
     }
 }
 set_pattern();
+set_background();
 function run_the_game(){
     context.clearRect(0,0,size,size);
     set_background();
@@ -109,9 +124,38 @@ function run_the_game(){
     display_result();
     reset_pattern();
 }
+function clear_array(){
+    for(var i=0;i<block_number;i++){
+        for(var j=0;j<block_number;j++){
+            arr[i][j]=0;
+            next[i][j]=0;
+        }
+    }
+}
+//clear checkbox
+var clear=document.getElementById("clearbox");
+clear.addEventListener("click",function clearbox(){
+    for(var i=1;i<block_number-1;i++){
+        for(var j=1;j<block_number-1;j++){
+            document.getElementById(i+","+j).checked = false;
+            console.log(0);
+        }
+    }
+})
 // start gaming
 var x=document.getElementById("play");
+var running; 
 x.addEventListener("click",
     function play(){
-        setInterval(run_the_game, 100);
+        if(x.value=="Play"){
+            set_pattern();
+            x.value="Restart";
+            running = setInterval(run_the_game, 120/document.getElementById("speed").value*10);
+        }else{
+            clearInterval(running);
+            clear_array();
+            set_pattern();
+            running = setInterval(run_the_game, 120/document.getElementById("speed").value*10);
+        }
+        
     })
