@@ -157,5 +157,4 @@ x.addEventListener("click",
             set_pattern();
             running = setInterval(run_the_game, 120/document.getElementById("speed").value*10);
         }
-        
     })
