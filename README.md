@@ -1,5 +1,5 @@
 # Game_of_life
-INTRODUCTION TO ARTIFICIAL INTELLIGENCE Homework : conway's game of life.  
+INTRODUCTION TO ARTIFICIAL INTELLIGENCE Mideterm Project : conway's game of life.  
 ## Normal version:
 https://benny0w0liu.github.io/Game_of_life/Life_game.html  
 ## Battle version:
